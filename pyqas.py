@@ -273,8 +273,8 @@ def getIpAddress() :
         lines=file.readlines()
         for line in lines:
             if "IPv4 Address. . . . . " in line :
-                os.popen("del res.txt")
+                os.popen("del ip.txt")
                 return line.split()[-1]
-        os.popen("del res.txt")
+        os.popen("del ip.txt")
         return "None"
     
