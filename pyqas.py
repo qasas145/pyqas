@@ -254,3 +254,27 @@ def convertMp4ToMp3(path_of_mp4, path_to_put_mp3) :
             time.sleep(2)
         else :
             print("That's not file ")
+
+def getIpAddress() :
+    # finding the ip of the device
+
+    import os
+
+
+    ip_res = os.popen("ipconfig").read()
+
+    # first we will create a text file to put it the res
+
+    with open("ip.txt", "w") as file :
+        file.write(ip_res)
+    # second we will read that file
+
+    with open("ip.txt", "r") as file :
+        lines=file.readlines()
+        for line in lines:
+            if "IPv4 Address. . . . . " in line :
+                os.popen("del res.txt")
+                return line.split()[-1]
+        os.popen("del res.txt")
+        return "None"
+    
