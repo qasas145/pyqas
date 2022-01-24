@@ -260,6 +260,8 @@ def getIpAddress() :
 
     import os
 
+    lst_ips = []
+
 
     ip_res = os.popen("ipconfig").read()
 
@@ -273,8 +275,7 @@ def getIpAddress() :
         lines=file.readlines()
         for line in lines:
             if "IPv4 Address. . . . . " in line :
-                os.popen("del ip.txt")
-                return line.split()[-1]
+                lst_ips.append(line.split()[-1])
         os.popen("del ip.txt")
-        return "None"
+        return lst_ips[-1]
     
