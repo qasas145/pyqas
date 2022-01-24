@@ -175,45 +175,19 @@ def ExtractingCh(string, lst) :
 
 from moviepy.editor import *
 def filter_command(command) :
-    files=""
-    path=""
-
-    for i in range(0, len(command)) :
-        if command[i] == "-" and command[i+1] == "f" and command[i+2] == "=" :
-            
-            # files from the command without filtering like ['file.txt', 'file.txt']
-            files_1 = "".join(command[x] for x in range(i+3, len(command)))
-
-            # removing the [] from the file names
-            new_files = "".join(files_1[x] for x in range(1, len(files_1)-1))
-
-            # removing the '' from the file name 
-
-            files_2=[]
-
-            for letter in new_files.split(",") :
-                # removing the '' from each file name 
-                new_file = "".join(letter[x] for x in range(1, len(letter)-1))
-                files_2.append(new_file)
-            
-            files = files_2
-
-        if command[i] == "-" and command[i+1] == "p" and command[i+2] == "=" :
-            for l in range(0, len(command)) :
-                # getting the index -f= to select all the letters before it until the -p=
-                if command[l] == "-" and command[l+1] == "f" and command[l+2] == "=" :
-                    # combinig it to one string
-                    path_1 = "".join(command[x] for x in range(i+3, l-1)) 
-                    if path_1[-1]!="/" :
-                        path = path_1 +"/"
-                    else :
-                        path = path_1
-    command_filtered = {
+    path = command.split("-p=")[1]
+    files = command.split("-f=")[-1]
+    lst = []
+    for i in range(-(len(path.split("-f=")[0])-1), 1) :
+        if path[i] != " " :
+            lst.append(-i)
+    new_path = "".join(path.split("-f=")[0][x] for x in range(0, lst[0]))
+    cmd_data = {
+        "path" :new_path,
         "files" :files,
-        "path" :path,
     }
-
-    return command_filtered
+    
+    return  cmd_data
 
 
 
