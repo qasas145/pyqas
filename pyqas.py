@@ -231,27 +231,37 @@ def downloadFromYoutube() :
     print("Downloaded")
 
 def convertMp4ToMp3(path_of_mp4, path_to_put_mp3) :
+    txt = "mohamed\q"
+    if path_of_mp4[-1] != "/"  :
+        if "/" in path_of_mp4 :
+            path_of_mp4 = path_of_mp4+"/"
+        else :
+            path_of_mp4 = path_of_mp4+txt[-2]
+    if path_to_put_mp3[-1] != "/"  :
+        if "/" in path_to_put_mp3 :
+            path_to_put_mp3 = path_to_put_mp3+"/"
+        else :
+            path_to_put_mp3 = path_to_put_mp3+txt[-2]
     import time
     import os
-
     videos = os.listdir(path_of_mp4)
-
-
     for video in videos :
+        if os.path.isfile(path_of_mp4+video) :
+            if ".mp4" in video :
 
-        if os.path.isfile({path_to_put_mp3}+video) :
+                print(f"Coverting {video}")
 
-            print(f"Coverting {video}")
+                clip = VideoFileClip(path_of_mp4+video)
 
-            clip = VideoFileClip(path_of_mp4+video)
+                audio = clip.audio
+                audio.write_audiofile(path_to_put_mp3+video.split('.')[0]+'.mp3')
 
-            audio = clip.audio
-            audio.write_audiofile(path_to_put_mp3+video.split('.')[0]+'.mp3')
-
-            clip.close()
-            audio.close()
-            print("Converted ..")
-            time.sleep(2)
+                clip.close()
+                audio.close()
+                print("Converted ..")
+                time.sleep(2)
+            else :
+                print("The file isnot video file ")
         else :
             print("That's not file ")
 
