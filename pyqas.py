@@ -315,3 +315,19 @@ def getIpAddress() :
         os.popen("del ip.txt")
         return lst_ips[-1]
     
+
+
+
+def extract_dir_name(path) :
+    lst = []
+    txt = "mohamed\q"
+    for i in range(-(len(path)-1), 1) :
+        if path[-i] == '/' or path[-1] == txt[-2] :
+            lst.append(-i)
+    try :
+        new_str = "".join(path[x] for x in range(Reverse_Lst(lst)[0]+1, Reverse_Lst(lst)[-1]))
+        return new_str
+    except :
+        new_str = "".join(path[x] for x in range(Reverse_Lst(lst)[0]+1, len(path)))
+        return new_str
+
