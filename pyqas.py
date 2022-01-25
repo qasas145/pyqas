@@ -174,52 +174,72 @@ def ExtractingCh(string, lst) :
 
 
 from moviepy.editor import *
-def filter_command(command) :
-    path = command.split("-p=")[1].split(" -f=")[0]
-    files = command.split("-f=")[-1]
-    # filtering the path
-    lst_end = []
-    lst_start = []
-    txt = "mohamed\q"
-    for i in range(-(len(path)-1), 1) :
-        if (path[-i] != " "):
-            lst_end.append(-i)
-    new_path = "".join(path[x] for x in range(0, lst_end[0]+1))
-    for i in range(0, len(new_path)) :
-        if new_path[i] != " " :
-            lst_start.append(i)
-    new_path = "".join(new_path[x] for x in range(lst_start[0], len(new_path)))
-    if new_path[-1] != "/" or new_path[-1] != txt[-2] :
-        if '/' in new_path :
-            new_path = new_path+"/"
-        else :
-            new_path = new_path+txt[-2]
-    # end of the filtering the path
-    # filtering the files
-    lst_files_end = []
-    lst_files_start = []
-    lst_files_main = []
-    if "*" not in files :
-        files = files.split(",")
-        for file in files :
-            lst_files_end = []
-            for i in range(-(len(file)-1), 1) :
-                if (file[-i] != " "):
-                    lst_files_end.append(-i)
-            new_file = "".join(file[x] for x in range(0, lst_files_end[0]+1))
-            lst_files_start = []
-            for i in range(0, len(new_file)) :
-                if new_file[i] != " " :
-                    lst_files_start.append(i)
-            new_file = "".join(new_file[x] for x in range(lst_files_start[0], len(new_file)))
-            lst_files_main.append(new_file)
-    # end of the filtering files
-    data = {
-        "path" :new_path,
-        "files" :lst_files_main,
-    } 
 
-    return data
+
+
+def filter_command(command) :
+    try:
+        path = command.split("-p=")[1].split(" -f=")[0]
+        files = command.split("-f=")[-1]
+        # filtering the path
+        lst_end = []
+        lst_start = []
+        txt = "mohamed\q"
+        for i in range(-(len(path)-1), 1) :
+            if (path[-i] != " "):
+                lst_end.append(-i)
+        new_path = "".join(path[x] for x in range(0, lst_end[0]+1))
+        for i in range(0, len(new_path)) :
+            if new_path[i] != " " :
+                lst_start.append(i)
+        new_path = "".join(new_path[x] for x in range(lst_start[0], len(new_path)))
+        if new_path[-1] != "/" or new_path[-1] != txt[-2] :
+            if '/' in new_path :
+                new_path = new_path+"/"
+            elif txt[-2] in new_path :
+                new_path = new_path+txt[-2]
+        # end of the filtering the path
+        # filtering the files
+        lst_files_end = []
+        lst_files_start = []
+        lst_files_main = []
+        if "*" not in files :
+            files = files.split(",")
+            for file in files :
+                lst_files_end = []
+                for i in range(-(len(file)-1), 1) :
+                    if (file[-i] != " "):
+                        lst_files_end.append(-i)
+                new_file = "".join(file[x] for x in range(0, lst_files_end[0]+1))
+                lst_files_start = []
+                for i in range(0, len(new_file)) :
+                    if new_file[i] != " " :
+                        lst_files_start.append(i)
+                new_file = "".join(new_file[x] for x in range(lst_files_start[0], len(new_file)))
+                lst_files_main.append(new_file)
+                data = {
+                    "path" :new_path,
+                    "files" :lst_files_main,
+                } 
+                return data
+        else :
+            files = files.split(",")
+            for i in range(-(len(files[0])-1), 1) :
+                if (files[0][-i] != " "):
+                    lst_files_end.append(-i)
+            new_file = "".join(files[0][x] for x in range(0, lst_files_end[0]+1))
+            for i in range(0, len(new_file)) :
+                    if files[0][i] != " " :
+                        lst_files_start.append(i)
+            new_file = "".join(new_file[x] for x in range(lst_files_start[0], len(new_file)))
+            data = {
+                "path" :new_path,
+                "files" :new_file,
+            } 
+            return data
+        # end of the filtering files
+    except :
+        return "Please enter a valid command "
 
 
 
