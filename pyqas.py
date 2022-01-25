@@ -318,16 +318,18 @@ def getIpAddress() :
 
 
 
+
 def extract_dir_name(path) :
+    print(len(path))
     lst = []
     txt = "mohamed\q"
     for i in range(-(len(path)-1), 1) :
-        if path[-i] == '/' or path[-1] == txt[-2] :
-            lst.append(-i)
-    try :
-        new_str = "".join(path[x] for x in range(Reverse_Lst(lst)[0]+1, Reverse_Lst(lst)[-1]))
-        return new_str
-    except :
-        new_str = "".join(path[x] for x in range(Reverse_Lst(lst)[0]+1, len(path)))
-        return new_str
-
+        if path[-1] == '/' or path[-1] == txt[-2] :
+            if path[-i] == '/' or path[-i] == txt[-2]:
+                if -i != len(path)-1 :
+                    lst.append(-i)
+        else :
+            if path[-i] == '/' or path[-i] == txt[-2] :
+                lst.append(-i)
+    new_str = "".join(path[i] for i in range(lst[0]+1, len(path)) if path[i] != "/" and path[i] != txt[-2])
+    return new_str
