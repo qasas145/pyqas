@@ -55,7 +55,7 @@ def Order_Nums(list) :
             list_orderd.append(num)
     return list_orderd
 def Max_Value(lst) :
-    ordered_nums=order_nums(lst)
+    ordered_nums=OrderNums(lst)
     return ordered_nums[0]
 def Remove_word(text, word) :
     text_words=text.split()
@@ -333,3 +333,18 @@ def extract_dir_name(path) :
                 lst.append(-i)
     new_str = "".join(path[i] for i in range(lst[0]+1, len(path)) if path[i] != "/" and path[i] != txt[-2])
     return new_str
+
+
+
+def extract_the_added_dir() :
+    txt = "mohamed/q"
+    dirs = os.listdir(os.getcwd())
+    lst =[]
+    for dir in dirs :
+        time =os.path.getmtime(os.getcwd()+txt[-2]+dir)
+        lst.append(float(time))
+    ordered_dirs = Order_Nums(lst)
+    for dir in dirs :
+        time =os.path.getmtime(os.getcwd()+txt[-2]+dir)
+        if float(time) == ordered_dirs[0] :
+            return dir
