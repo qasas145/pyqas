@@ -55,13 +55,14 @@ def Order_Nums(list) :
             list_orderd.append(num)
     return list_orderd
 def Max_Value(lst) :
-    ordered_nums=OrderNums(lst)
+    ordered_nums=Order_Nums(lst)
     return ordered_nums[0]
 def Remove_word(text, word) :
     text_words=text.split()
     str_after="".join(f'{wrd} ' for wrd in text_words if wrd!=word)
     return str_after
 def Replace_word(text, word, new_word) :
+    lst= []
     text_words=text.split()
     str_after=""
     for item in text_words:
@@ -167,14 +168,7 @@ def ExtractingCh(string, lst) :
     NewString="".join(x for x in lst)
     return NewString
 
-
-
-
-
-
-
 from moviepy.editor import *
-
 
 
 def filter_command(command) :
@@ -348,3 +342,84 @@ def extract_the_added_dir() :
         time =os.path.getmtime(os.getcwd()+txt[-2]+dir)
         if float(time) == ordered_dirs[0] :
             return dir
+
+
+
+
+def Calc_Time_With_Seconds(time1, time2) :
+    oneHour = 60 * 60
+    oneMinute = 60
+    day_dif = int(time2['day']-time1['day'])
+    hours_dif = int(time1['hours']) - int(time2['hours'])
+    minutes_dif = int(time2['minutes']) - int(time1['minutes'])
+    seconds_dif = int(time2['seconds']) - int(time1['seconds'])
+    print(seconds_dif)
+    if abs(day_dif) == 0 :
+        if hours_dif == 0 :
+            return int(oneMinute * abs(minutes_dif) + seconds_dif)
+        else :
+            if seconds_dif == 0 :
+                if minutes_dif == 0 :
+                    return int(oneHour * abs(hours_dif))
+                elif minutes_dif > 0 :
+                    return int(oneHour * abs(hours_dif) + oneMinute * abs(minutes_dif))
+                else :
+                    if abs(hours_dif) == 1 :
+                        return int(oneMinute * (60 - time1['minutes'] + time2['minutes']))
+                    else :
+                        return int(oneHour * hours_dif + oneMinute * minutes_dif)
+            elif  seconds_dif > 0:
+                if minutes_dif == 0 :
+                    return int(oneHour * abs(hours_dif) + abs(seconds_dif))
+                elif minutes_dif > 0 :
+                    return int(oneHour * abs(hours_dif) + oneMinute * abs(minutes_dif) + abs(seconds_dif))
+                else :
+                    if abs(hours_dif) == 1 :
+                        return int(oneMinute * (60 - time1['minutes'] + time2['minutes']) + abs(seconds_dif))
+                    else :
+                        return int(oneHour * hours_dif + oneMinute * minutes_dif + abs(seconds_dif))
+            else :
+                if minutes_dif == 0 :
+                    return int(oneHour * abs(hours_dif) + seconds_dif)
+                elif minutes_dif > 0 :
+                    return int(oneHour * abs(hours_dif) + oneMinute * abs(minutes_dif) + seconds_dif)
+                else :
+                    if abs(hours_dif) == 1 :
+                        return int(oneMinute * (60-time1['minutes'] + time2['minutes']) + seconds_dif)
+                    else :
+                        return int(oneHour * hours_dif + oneMinute * minutes_dif + seconds_dif)
+    else :
+        hours_dif = 24 - time1['hours'] + time2['hours']
+        if hours_dif == 0 :
+            return int(oneMinute * abs(minutes_dif) + abs(seconds_dif))
+        else :
+            if seconds_dif == 0 :
+                if minutes_dif == 0 :
+                    return int(oneHour * abs(hours_dif))
+                elif minutes_dif > 0 :
+                    return int(oneHour * abs(hours_dif) + oneMinute * abs(minutes_dif))
+                else :
+                    if abs(hours_dif) == 1 :
+                        return int(oneMinute * (60-time1['minutes'] + time2['minutes']))
+                    else :
+                        return int(oneHour * hours_dif + oneMinute * (60-time1['minutes'] + time2['minutes']))
+            elif  seconds_dif > 0:
+                if minutes_dif == 0 :
+                    return int(oneHour * abs(hours_dif) + abs(seconds_dif))
+                elif minutes_dif > 0 :
+                    return int(oneHour * abs(hours_dif) + oneMinute * abs(minutes_dif) + abs(seconds_dif))
+                else :
+                    if abs(hours_dif) == 1 :
+                        return int(oneMinute * (60-time1['minutes'] + time2['minutes']) + abs(seconds_dif))
+                    else :
+                        return int(oneHour * hours_dif + oneMinute * (60-time1['minutes'] + time2['minutes']) + abs(seconds_dif))
+            else :
+                if minutes_dif == 0 :
+                    return int(oneHour * abs(hours_dif) + 60 - time1['seconds'] + time2['seconds'])
+                elif minutes_dif > 0 :
+                    return int(oneHour * abs(hours_dif) + oneMinute * abs(minutes_dif) + 60 - time1['seconds'] + time2['seconds'])
+                else :
+                    if abs(hours_dif) == 1 :
+                        return int(oneMinute * (60-time1['minutes'] + time2['minutes']) + abs(seconds_dif))
+                    else :
+                        return int(oneHour * hours_dif + oneMinute * (60-time1['minutes'] + time2['minutes']) + abs(seconds_dif))
